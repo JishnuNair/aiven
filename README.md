@@ -1,15 +1,19 @@
 # Aiven Senior Data Engineer Assignment
 
 # Data Source
- [New York Taxi Dataset]!(https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+ [New York Taxi Dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 
 This is a public dataset regarding taxi trips in New York, released as Parquet files. 
 
-For the purpose of this assignment, I am only considering the Yellow and Green taxi data. The data dictionaries for these two datasets are available in the same link provided above.
+For the purpose of this assignment, I am only considering the Yellow and Green taxi data for 2024. The data dictionaries for these two datasets are available in the same link provided above.
 
 # Data Pipeline
 
-This is a Docker-based data pipeline that extracts data from a CSV file and loads it into a PostgreSQL database.
+This is a Docker-based data pipeline that does the following steps:
+
+* Extracts latest Taxi trips data for Yellow and Green trips
+* Loads data to staging table in Postgres
+* Loads data to final table in Postgres, after verifying schema changes
 
 ## How to Run
 
