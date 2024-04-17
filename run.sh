@@ -74,7 +74,7 @@ fi
 
 if [[ $stage_only -eq 1 || ($extract_only -eq 0 && $stage_only -eq 0 && $final_only -eq 0) ]]; then
     echo "Running write_stage"
-    python src/write_stage.py --yellow_file_path $yellow_file_path --green_file_path $green_file_path --db_name $database --db_user $dbuser --db_pass $dbpass --db_host $dbhost --db_port $dbport
+    python src/write_stage.py --db_name $database --db_user $dbuser --db_pass $dbpass --db_host $dbhost --db_port $dbport
 fi
 
 if [[ $final_only -eq 1 || ($extract_only -eq 0 && $stage_only -eq 0 && $final_only -eq 0) ]]; then
