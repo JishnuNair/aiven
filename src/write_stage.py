@@ -74,8 +74,8 @@ def create_and_insert_data(engine, table_name, data, chunksize=1000):
 
 
 def main(args):
-    yellow_file_path = args.yellow_file_path
-    green_file_path = args.green_file_path
+    yellow_file_path = "data/yellow_tripdata_*.parquet"
+    green_file_path = "data/green_tripdata_*.parquet"
     db_name = args.db_name
     db_user = args.db_user
     db_pass = args.db_pass
@@ -97,18 +97,6 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-y",
-        "--yellow_file_path",
-        help="Path to yellow trips parquet file",
-        required=True
-    )
-    parser.add_argument(
-        "-g",
-        "--green_file_path",
-        help="Path to green trips parquet file",
-        required=True
-    )
     parser.add_argument(
         "-dbn",
         "--db_name",

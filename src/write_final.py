@@ -202,7 +202,9 @@ def insert_update_data(engine, table_name):
         raise ValueError(f"Unknown table: {table_name}")
 
     surrogate_key = func.md5(
-        func.concat(*[cast(getattr(stage_table.c, col), String) for col in key_columns])
+        func.concat(
+            *[cast(getattr(stage_table.c, col), String) for col in key_columns]
+        )
     )
 
     # Insert the new records into the table
@@ -218,11 +220,16 @@ def insert_update_data(engine, table_name):
     logging.info("Data inserted into table %s", table_name)
 
     # Get the column names from the stage table
-    # column_names = [col.name for col in stage_table.columns if col.name not in key_columns]
+    # column_names = [
+    #     col.name for col in stage_table.columns
+    # if col.name not in key_columns
+    # ]
 
-    # # Generate the SET clause of the UPDATE statement
-    # set_clause = ', '.join(f""" "{col.upper()}" = {stage_table_name}."{col}" """ for col in column_names)
-
+    # Generate the SET clause of the UPDATE statement
+    # set_clause = ', '.join(
+    #     f""" "{col.upper()}" = {stage_table_name}."{col}" """
+    #     for col in column_names
+    # )
     # # Generate the UPDATE statement
     # update_query = (
     #     f"UPDATE {table_name} "
