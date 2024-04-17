@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip install --no-cache-dir psycopg2-binary pandas
+RUN pip install -r requirements.txt
 
 CMD ["bash", "run.sh"]
