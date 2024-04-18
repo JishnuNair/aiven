@@ -164,11 +164,10 @@ def clean_stage_table(engine, table_name):
                 SELECT {', '.join([f'"{col}"' for col in key_columns])} FROM duplicates WHERE rownum > 1
             );
         """)
-
-        conn.commit()
-
         # Execute the DELETE statement
         conn.execute(text(delete_query))
+
+        conn.commit()
 
         logging.info("Stage table %s cleaned", stage_table_name)
 
@@ -207,13 +206,18 @@ def insert_update_data(engine, table_name):
         )
     )
 
+    join_conditions = " AND ".join(
+        f'{stage_table_name}."{column}" = yt."{column.upper()}"'
+        for column in key_columns
+    )
+
     # Insert the new records into the table
     insert_query = (
         f"INSERT INTO {table_name} "
-        f"SELECT {surrogate_key} AS _ID, {stage_table_name}.*"
-        f" FROM {stage_table_name} "
-        f"WHERE {surrogate_key} NOT IN "
-        f"""(SELECT "_ID" FROM {table_name})"""
+        f"SELECT {surrogate_key} AS _ID, {stage_table_name}.* "
+        f"FROM {stage_table_name} "
+        f"LEFT JOIN {table_name} yt ON {join_conditions} "
+        f"""WHERE yt."_ID" IS NULL"""
     )
     conn.execute(text(insert_query))
     conn.commit()

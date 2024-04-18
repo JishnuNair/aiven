@@ -10,6 +10,7 @@ import logging
 
 import pandas as pd
 from sqlalchemy import create_engine
+from glob import glob
 
 logging.basicConfig(level=logging.INFO)
 
@@ -22,8 +23,9 @@ def load_data(file_path):
     Returns:
         pd.DataFrame: Loaded data
     """
-    logging.info("Loading data from %s", file_path)
-    data = pd.read_parquet(file_path)
+    input_file = glob(file_path)[0]
+    logging.info("Loading data from %s", input_file)
+    data = pd.read_parquet(input_file)
     return data
 
 
