@@ -78,7 +78,10 @@ def create_table(engine, table_name):
         new_columns = (set(stg_columns.keys()) - set(final_columns.keys()))
         for column in new_columns:
             # Add the new column to the final table
-            conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {column} {stg_columns[column]}"))
+            conn.execute(text(
+                f"ALTER TABLE {table_name} "
+                f"ADD COLUMN {column} {stg_columns[column]}"
+            ))
             logging.info("Column %s added to table %s", column, table_name)
 
         # Check for deleted columns
@@ -111,7 +114,7 @@ def create_table(engine, table_name):
                 conn.execute(text(rename_query))
                 # Add the new column
                 add_column_query = (
-                    f"ALTER TABLE {table_name} ADD COLUMN {column} {stg_columns[column]}"
+                    f"ALTER TABLE {table_name} ADD COLUMN {column.upper()} {stg_columns[column]}"
                 )
                 conn.execute(text(add_column_query))
                 logging.info(
@@ -119,6 +122,7 @@ def create_table(engine, table_name):
                     column,
                     table_name,
                 )
+        conn.commit()
 
         logging.info("Table %s schema changes handled", table_name)
 

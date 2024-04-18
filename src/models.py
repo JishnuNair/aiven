@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime, MetaData, Float, func, Index
+from sqlalchemy import Column, Integer, String, DateTime, MetaData, Float, func, Index, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.dialects.postgresql import TEXT
 
 Base = declarative_base(metadata=MetaData())
 
@@ -16,10 +17,10 @@ class YellowTrips(Base):
     PASSENGER_COUNT = Column(Float)
     TRIP_DISTANCE = Column(Float)
     RATECODEID = Column(Float)
-    STORE_AND_FWD_FLAG = Column(String)
+    STORE_AND_FWD_FLAG = Column(TEXT)
     PULOCATIONID = Column(Integer)
     DOLOCATIONID = Column(Integer)
-    PAYMENT_TYPE = Column(Integer)
+    PAYMENT_TYPE = Column(BigInteger)
     FARE_AMOUNT = Column(Float)
     EXTRA = Column(Float)
     MTA_TAX = Column(Float)
@@ -47,7 +48,7 @@ class GreenTrips(Base):
     VENDORID = Column(Integer)
     LPEP_PICKUP_DATETIME = Column(DateTime)
     LPEP_DROPOFF_DATETIME = Column(DateTime)
-    STORE_AND_FWD_FLAG = Column(String)
+    STORE_AND_FWD_FLAG = Column(TEXT)
     RATECODEID = Column(Float)
     PULOCATIONID = Column(Integer)
     DOLOCATIONID = Column(Integer)
